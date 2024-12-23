@@ -5753,7 +5753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   url: https://grafana.kaushitha.xyz/api/ds/query?ds_type=influxdb
-  apiToken: glsa_rKVRSRokeRrPPzlDxSNQ9RsbdtmwP1bs_baad5bde
+  apiToken: 
   powerObject1: {fileID: 374019089}
   powerObject2: {fileID: 2142338615}
   co2Object: {fileID: 936750944}

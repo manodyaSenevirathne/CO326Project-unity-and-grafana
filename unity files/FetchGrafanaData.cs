@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 public class FetchGrafanaData : MonoBehaviour
 {
     public string url = "http://localhost:3000/api/ds/query?ds_type=influxdb";
-    public string apiToken = "glsa_rKVRSRokeRrPPzlDxSNQ9RsbdtmwP1bs_baad5bde";
+    public string apiToken = "";
     
     // Public fields for the GameObjects
     public GameObject powerObject1;
