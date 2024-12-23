@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  influxdb:
+    image: influxdb:2.0
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+    environment:
+      - INFLUXDB_DB=electrical system
+      - INFLUXDB_ADMIN_USER=manodya
+      - INFLUXDB_ADMIN_PASSWORD=123456789
+      - INFLUXDB_HTTP_AUTH_ENABLED=true
+
+  grafana:
+    image: grafana/grafana:latest
+    user: "472"
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=123456789
+      
+  sensors:
+    image: python:3.9    
+    
+    depends_on:
+      - influxdb 
+    
+    volumes:
+      - ./data_gen.py:/app/data_gen.py
+    command: bash -c "pip install influxdb_client && python /app/data_gen.py"
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token eyJhIjoiZWJiZDQwZjMzNWE0NDU5YTIwYjZkZTc1NDAyMWY0YWIiLCJ0IjoiYWJhZjJkODYtZWY0Zi00OWNlLWJlMWQtMzg2NGM3NTRhYTlkIiwicyI6IllUSmpaamsxTmpFdFl6Y3haUzAwTnpGakxXRmxNek10Wm1Fd01UVm1NV0kxTXpWaSJ9    
+    network_mode: host
+    depends_on:
+      - grafana
+
+volumes:
+  influxdb-data:
+    external: true
+  grafana-data:
+    external: true
